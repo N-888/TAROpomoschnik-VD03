@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ПОДКЛЮЧАЕМ BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <style>
+        /* ЦВЕТА ДЛЯ САЙТА */
+        :root {
+            --purple-dark: #4A2C6D;    /* Тёмно-фиолетовый */
+            --purple-medium: #6A4C93;  /* Средне-фиолетовый */
+            --purple-light: #8B6BAB;   /* Светло-фиолетовый */
+            --gold: #FFD700;           /* ЗОЛОТОЙ */
+            --cream: #F8F5F0;          /* Кремовый */
+        }
+
+        /* ОСНОВНЫЕ СТИЛИ */
+        body {
+            background: linear-gradient(135deg, var(--purple-dark), var(--purple-medium));
+            color: var(--cream);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* ШАПКА САЙТА */
+        .navbar {
+            background: rgba(74, 44, 109, 0.95) !important;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .navbar-brand {
+            color: var(--gold) !important;
+            font-weight: bold;
+            font-size: 1.6rem;
+        }
+
+        /* ЛОГОТИП В ШАПКЕ */
+        .logo-img {
+            height: 50px; /* Высота логотипа */
+            width: auto; /* Сохраняем пропорции */
+            margin-right: 15px; /* Отступ от текста */
+            border-radius: 8px; /* Скругленные углы */
+            border: 2px solid var(--gold); /* Золотая рамка */
+            padding: 3px; /* Отступ внутри рамки */
+            background: white; /* Белый фон для контраста */
+        }
+
+        /* СЛАЙДЕР - ИСПРАВЛЯЕМ ОБРЕЗКУ */
+        .carousel-item {
+            height: 60vh; /* Высота 60% от высоты экрана (адаптивно) */
+            min-height: 400px; /* Минимальная высота */
+            max-height: 600px; /* Максимальная высота */
+            background-color: var(--purple-dark); /* Фон если изображение не загрузится */
+            display: flex;
+            align-items: center; /* Выравнивание по центру вертикально */
+            justify-content: center; /* Выравнивание по центру горизонтально */
+        }
+
+        .carousel-item img {
+            max-width: 100%; /* Максимальная ширина 100% */
+            max-height: 100%; /* Максимальная высота 100% */
+            width: auto; /* Автоматическая ширина */
+            height: auto; /* Автоматическая высота */
+            object-fit: contain; /* ВАЖНО: не обрезаем, а помещаем целиком */
+            border-radius: 10px; /* Скругленные углы у изображений */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Тень для объема */
+        }
+
+        .carousel-caption {
+            background: rgba(74, 44, 109, 0.85); /* Полупрозрачный фон */
+            border-radius: 10px;
+            padding: 20px;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 800px;
+            border: 2px solid var(--gold);
+        }
+
+        /* КАРТОЧКИ */
+        .card {
+            background: var(--purple-medium);
+            border: 2px solid var(--gold);
+            color: var(--cream);
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2);
+        }
+
+        .card-title {
+            color: var(--gold);
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 10px;
+        }
+
+        /* ФУТЕР */
+        footer {
+            background: var(--purple-dark);
+            border-top: 3px solid var(--gold);
+            margin-top: 50px;
+        }
+
+        .social-links a {
+            color: var(--gold);
+            font-size: 1.8rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--cream);
+            transform: scale(1.1);
+        }
+
+        /* АДАПТИВНЫЕ ЗАГОЛОВКИ */
+        .section-title {
+            color: var(--gold);
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--gold);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        /* КНОПКИ */
+        .btn-gold {
+            background: var(--gold);
+            color: var(--purple-dark);
+            border: 2px solid var(--gold);
+            font-weight: bold;
+            padding: 10px 25px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            background: transparent;
+            color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+    </style>
+
+    <title>ТАРО ПОМОЩНИК</title>
+</head>
+<body>
+    <!-- ШАПКА САЙТА С ЛОГОТИПОМ -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <!-- НАЗВАНИЕ САЙТА С ЛОГОТИПОМ -->
+            <a class="navbar-brand" href="#">
+                <img src="images/slide4.png" alt="Логотип ТАРО ПОМОЩНИК" class="logo-img">
+                <span>ТАРО ПОМОЩНИК</span>
+            </a>
+
+            <!-- КНОПКА МЕНЮ ДЛЯ ТЕЛЕФОНОВ -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- МЕНЮ -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#readings">Расклады</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faq">Вопросы</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacts">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <main>
+        <!-- СЕКЦИЯ 1: СЛАЙДЕР -->
+        <section id="home" class="mb-5">
+            <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+
+                <!-- ТОЧКИ ДЛЯ ПЕРЕКЛЮЧЕНИЯ СЛАЙДОВ -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"></button>
+                    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="3"></button>
+                </div>
+
+                <!-- СЛАЙДЫ -->
+                <div class="carousel-inner">
+                    <!-- СЛАЙД 1 -->
+                    <div class="carousel-item active">
+                        <img src="images/slide1.jpg.png" class="d-block" alt="Карты таро">
+                        <div class="carousel-caption">
+                            <h3>Расклады на любовь и отношения</h3>
+                            <p>Помогаем разобраться в чувствах и найти гармонию</p>
+                            <button class="btn btn-gold mt-2">Узнать больше</button>
+                        </div>
+                    </div>
+
+                    <!-- СЛАЙД 2 -->
+                    <div class="carousel-item">
+                        <img src="images/slide2.jpg.png" class="d-block" alt="Магический шар">
+                        <div class="carousel-caption">
+                            <h3>Советы для сложных ситуаций</h3>
+                            <p>Находим ответы на самые важные вопросы</p>
+                            <button class="btn btn-gold mt-2">Получить совет</button>
+                        </div>
+                    </div>
+
+                    <!-- СЛАЙД 3 -->
+                    <div class="carousel-item">
+                        <img src="images/slide3.jpg.png" class="d-block" alt="Рука с картами">
+                        <div class="carousel-caption">
+                            <h3>Разбор жизненных ситуаций</h3>
+                            <p>Анализируем и помогаем принять верное решение</p>
+                            <button class="btn btn-gold mt-2">Заказать разбор</button>
+                        </div>
+                    </div>
+
+                    <!-- СЛАЙД 4 - ЛОГОТИП -->
+                    <div class="carousel-item">
+                        <img src="images/slide4.png" class="d-block" alt="Логотип ТАРО ПОМОЩНИК" style="max-height: 70vh;">
+                        <div class="carousel-caption">
+                            <h3>ТАРО ПОМОЩНИК</h3>
+                            <p>Ваш проводник в мире магии и предсказаний</p>
+                            <button class="btn btn-gold mt-2">Начать работу</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- КНОПКИ ВПЕРЕД/НАЗАД -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ 2: КАРТОЧКИ -->
+        <section id="readings" class="container mb-5">
+            <h2 class="section-title">Наши услуги</h2>
+
+            <div class="row">
+                <!-- КАРТОЧКА 1 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Базовый расклад</h5>
+                            <p class="card-text">
+                                Расклад на 3 картах для ответов на срочные вопросы
+                                и понимания текущей ситуации.
+                            </p>
+                            <button class="btn btn-gold mt-3">Выбрать</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- КАРТОЧКА 2 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Расклад на отношения</h5>
+                            <p class="card-text">
+                                Анализ любовных отношений, перспектив развития
+                                и скрытых аспектов партнёрства.
+                            </p>
+                            <button class="btn btn-gold mt-3">Выбрать</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- КАРТОЧКА 3 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Карьерный совет</h5>
+                            <p class="card-text">
+                                Помощь в профессиональном выборе, развитии
+                                карьеры и решении рабочих конфликтов.
+                            </p>
+                            <button class="btn btn-gold mt-3">Выбрать</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ 3: АККОРДЕОН -->
+        <section id="faq" class="container mb-5">
+            <h2 class="section-title">Частые вопросы</h2>
+
+            <div class="accordion" id="faqAccordion">
+                <!-- ВОПРОС 1 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                            <i class="bi bi-question-circle me-2"></i>Как подготовиться к раскладу?
+                        </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Сформулируйте чёткий вопрос, настройтесь на спокойный лад.
+                            Можно зажечь свечу для создания атмосферы. Важно быть
+                            открытым к получению информации.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ВОПРОС 2 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                            <i class="bi bi-clock me-2"></i>Сколько длится консультация?
+                        </button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Стандартная консультация занимает 30-60 минут.
+                            Время зависит от сложности вопроса и выбранного расклада.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ВОПРОС 3 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                            <i class="bi bi-shield-check me-2"></i>Конфиденциальность гарантирована?
+                        </button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Да, все ваши вопросы и личная информация остаются
+                            строго конфиденциальными. Мы соблюдаем полную анонимность.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ФУТЕР -->
+    <footer id="contacts" class="py-4">
+        <div class="container">
+            <div class="row">
+                <!-- КОНТАКТЫ -->
+                <div class="col-md-6 mb-3">
+                    <h5 style="color: var(--gold);">Контакты</h5>
+                    <p>
+                        <i class="bi bi-envelope me-2"></i>Email: taro.help@mail.ru<br>
+                        <i class="bi bi-clock me-2"></i>Время работы: 10:00 - 22:00<br>
+                        <i class="bi bi-telephone me-2"></i>Консультации онлайн
+                    </p>
+                </div>
+
+                <!-- СОЦСЕТИ -->
+                <div class="col-md-6 mb-3">
+                    <h5 style="color: var(--gold);">Мы в соцсетях</h5>
+                    <div class="social-links">
+                        <!-- ПЕРВЫЙ БОТ -->
+                        <a href="https://t.me/taropomoschnik" target="_blank" title="Telegram канал">
+                            <i class="bi bi-telegram"></i>
+                        </a>
+                        <!-- ВТОРОЙ БОТ -->
+                        <a href="https://t.me/TAROpomoschnik_bot" target="_blank" title="Telegram бот">
+                            <i class="bi bi-robot"></i>
+                        </a>
+                        <!-- ТРЕТИЙ БОТ (НОВЫЙ) -->
+                        <a href="https://t.me/TaroPredskazatel_bot" target="_blank" title="Telegram бот предсказатель">
+                            <i class="bi bi-magic"></i>
+                        </a>
+                    </div>
+                    <p class="mt-2 small">Подпишитесь для получения магических советов</p>
+                </div>
+            </div>
+
+            <!-- КОПИРАЙТ -->
+            <div class="text-center mt-3 pt-3 border-top border-secondary">
+                <p>&copy; 2024 ТАРО ПОМОЩНИК. Все права защищены.</p>
+                <p class="small mt-1">Магия, которая меняет жизнь к лучшему</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ПОДКЛЮЧАЕМ BOOTSTRAP JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
